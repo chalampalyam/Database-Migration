@@ -1,0 +1,100 @@
+https://www.tutorialspoint.com/postgresql/postgresql_python.htm
+
+
+
+---------------DB Connection ---------------
+
+import boto3
+import boto.s3.connection
+import psycopg2
+from botocore.awsrequest import prepare_request_dict
+rds = boto3.client('rds')
+s3 = boto3.client('s3')
+
+#dbconn = (psql host=postgres1.cgarumphdeds.ap-south-1.rds.amazonaws.com port=5432 username=tmcs_user1  password=tmcs0987 dbname=postgres)
+
+dbconn = psycopg2.connect("dbname='postgres' user='tmcs_user1' host='postgres1.cgarumphdeds.ap-south-1.rds.amazonaws.com' password='tmcs0987'")
+
+
+
+print "Opened database successfully"
+~
+
+
+---------------[ec2-user@ip-172-31-9-117 ~]$ vi dbcrtab.py---
+import boto3
+import boto.s3.connection
+import psycopg2
+from botocore.awsrequest import prepare_request_dict
+rds = boto3.client('rds')
+s3 = boto3.client('s3')
+
+#dbconn = (psql host=postgres1.cgarumphdeds.ap-south-1.rds.amazonaws.com port=5432 username=tmcs_user1  password=tmcs0987 dbname=postgres)
+
+dbconn = psycopg2.connect("dbname='postgres' user='tmcs_user1' host='postgres1.cgarumphdeds.ap-south-1.rds.amazonaws.com' password='tmcs0987'")
+
+print "Opened database successfully"
+
+cur = dbconn.cursor()
+cur.execute('''CREATE TABLE COMPANY
+      (ID INT PRIMARY KEY     NOT NULL,
+      NAME           TEXT    NOT NULL,
+      AGE            INT     NOT NULL,
+      ADDRESS        CHAR(50),
+      SALARY         REAL);''')
+print "Table created successfully"
+dbconn.commit()
+dbconn.close()
+--------------------------------[ec2-user@ip-172-31-9-117 ~]$ vi dbins.py
+from botocore.awsrequest import prepare_request_dict
+rds = boto3.client('rds')
+s3 = boto3.client('s3')
+
+dbconn = psycopg2.connect("dbname='postgres' user='tmcs_user1' host='postgres1.cgarumphdeds.ap-south-1.rds.amazonaws.com' password='tmcs0987'")
+
+print "Opened database successfully"
+
+cur = dbconn.cursor()
+cur.execute("INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
+      VALUES (1, 'Paul', 32, 'California', 20000.00 )");
+
+cur.execute("INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
+      VALUES (2, 'Allen', 25, 'Texas', 15000.00 )");
+
+cur.execute("INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
+      VALUES (3, 'Teddy', 23, 'Norway', 20000.00 )");
+
+cur.execute("INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
+      VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 )");
+
+print "Records created successfully";
+dbconn.commit()
+dbconn.close()
+
+-----------------------
+[ec2-user@ip-172-31-9-117 ~]$ vi dbsel.py
+import psycopg2
+from botocore.awsrequest import prepare_request_dict
+rds = boto3.client('rds')
+s3 = boto3.client('s3')
+
+#dbconn = (psql host=postgres1.cgarumphdeds.ap-south-1.rds.amazonaws.com port=5432 username=tmcs_user1  password=tmcs0987 dbname=postgres)
+
+dbconn = psycopg2.connect("dbname='postgres' user='tmcs_user1' host='postgres1.cgarumphdeds.ap-south-1.rds.amazonaws.com' password='tmcs0987'")
+
+print "Opened database successfully"
+
+cur = dbconn.cursor()
+cur.execute("SELECT id, name, address, salary  from COMPANY")
+rows = cur.fetchall()
+for row in rows:
+   print "ID = ", row[0]
+   print "NAME = ", row[1]
+   print "ADDRESS = ", row[2]
+   print "SALARY = ", row[3], "\n"
+
+print "Operation done successfully";
+dbconn.commit()
+dbconn.close()
+
+-- 

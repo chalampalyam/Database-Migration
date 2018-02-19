@@ -1,0 +1,32 @@
+#Import required pacakges
+import boto3
+import psycopg2
+
+#Create S3 client
+s3client = boto3.client('s3')
+
+
+# Declare Variablese
+bucketName = 's3lambdainput'
+outputfile   = 'comp-rec.txt'
+record = ' '
+inserstmt = 'INSERT INTO COMPANY2 (a,b,c,d,e) values'
+
+#Step2: 
+dbconn = psgcopyg2.connect("dbname='postgres' user='tmcs_user1' host='postgres1.cgarumphdeds.ap-south-1.rds.amazonaws.com' password='tmcs0987'")
+cur = dbconn.cursor()
+
+sqlquery = 'SELECT * FROM COMPANY'
+cur.execute(sqlquery)
+rows = cur.fetchall()
+
+for row in rows:
+  record = insertstmt + str(row) 
+  cur.execute(record)
+exit
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+"Parameters" : 
+  {
+    
+"EC2Instance" : {
+      "Type" : "AWS::EC2::Instance"
+      "Properties" : {
+        "InstanceType" : "t2.micro",
+        "SecurityGroups" : "sg-06545f6e",
+        "KeyName" : "Mumbai_Key_pair",
+        "ImageId" : "ami-d5c18eba"
+                     }
+                }
+   }}

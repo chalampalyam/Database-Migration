@@ -1,0 +1,7 @@
+STEP-1 first go the vpc and then go to your vpcs-->and then create one vpc for two subnets.
+STEP-2 Then create 2 subnets.
+STEP-3 create subnet public and with the new ip then after creating the subnet select (modify association ip-add).especially for public only.again create for private with the same proccess
+step-4 Then go to Route table with public and private (routes)
+step-5 Go to internet gateways create public and attach to vpc.In internet gateway tag public access and then save.
+step-6 NAT Gateway and create private key in it.
+STEP-7 Go to EC2 and then create two different EC2's one public and private.

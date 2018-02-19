@@ -1,0 +1,27 @@
+#Import required pacakges
+import boto3
+
+#Create S3 client
+s3client = boto3.client('s3')
+
+#Create SQS Client
+sqsclient  = boto3.client('sqs')
+
+# Declare Variablese
+bucketName = 's3lambdainput'
+inputfile   = 'sqllist.py'
+outputfile = 'sqllistcopy2.py'
+qurl = 'https://sqs.ap-south-1.amazonaws.com/071117670759/tmcsq2'
+
+#Step1: Get file from S3
+s3file = s3client.get_object(Bucket=bucketName,Key=inputfile)
+
+#Step2: Read the inputfile
+records = (s3file['Body'].read())
+
+
+#Step2: send message to SQS
+
+sqssndresponse = sqsclient.send_message(QueueUrl=qurl,MessageBody=records)
+
+

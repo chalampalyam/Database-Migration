@@ -1,0 +1,72 @@
+   import boto3
+   # Get the service resource
+     sqs  = boto3.client('sqs')
+   # Create the queue. This returns an SQS.Queue instance
+   #  queue = sqs.create_queue(QueueName='tmcs_sqstest')
+   #   print(queue)
+
+        queueUrl = sqs.get_queue_url(QueueName='tmcs-bh-q1')
+         print (queueUrl)
+
+         url = queueUrl['QueueUrl']
+          print (url)
+
+    rspmtdata = queueUrl['ResponseMetadata']
+    print (rspmtdata)
+
+
+ctype2 = queueUrl['ResponseMetadata']['HTTPStatusCode']
+   print (ctype2)
+
+ if ctype2 == '200'
+    print ('successful')
+ else
+    print ('command failed')
+ 
+
+-----------------------
+
+  sndMsgRsp = sqs.send_message(QueueUrl = url, MessageBody='Test message2- Hello TMCS .. on sep 19th')
+     print (sndMsgRsp)
+
+  listQueue = sqs.list_queues()
+  print (listQueue)
+
+ listQueue2 = sqs.list_queues(QueueNamePrefix='tmcs')
+  print (listQueue2)
+
+
+rcvMsg = sqs.receive_message(QueueUrl = url)
+msg = rcvMsg.get('Messages')[0]
+msgBody = msg['Body']
+receipt_handle = msg['ReceiptHandle']
+
+Print rcvmsg
+print msg
+print msgBody
+print receipt_handle
+
+------------------------------------
+
+https://pythonhosted.org/setuptools/easy_install.html
+
+http://mattharris.org/2015/12/15/aws-sqs-boto3-basics/    ---> very good one for SQS Labs
+http://boto3.readthedocs.io/en/latest/guide/collections.html
+
+# SQS list all queues
+sqs = boto3.resource('sqs')
+for queue in sqs.queues.all():
+    print(queue.url)
+
+for bucket in s3.buckets.all():
+    print(bucket.name)
+
+buckets = list(s3.buckets.all())
+
+s3.Bucket('my-bucket').objects.delete()
+
+# S3 list all keys with the prefix 'photos/'
+s3 = boto3.resource('s3')
+for bucket in s3.buckets.all():
+    for obj in bucket.objects.filter(Prefix='photos/'):
+        print('{0}:{1}'.format(bucket.name, obj.key))

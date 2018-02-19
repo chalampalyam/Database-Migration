@@ -1,0 +1,49 @@
+https://cloudacademy.com/pricing/
+
+
+http://www.postgresqltutorial.com/postgresql-python/connect/  
+https://www.webassessor.com/wa.do?page=publicHome&branding=AMAZON
+https://www.tutorialspoint.com/postgresql/postgresql_python.htm
+
+http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-rds.html
+--
+https://www.linkedin.com/pulse/accessing-postgresql-databases-from-aws-python-lambda-wang
+http://support.datascientistworkbench.com/knowledgebase/articles/835206-access-postgresql-from-python-using-pscopg2
+https://www.linkedin.com/pulse/accessing-postgresql-databases-from-aws-python-lambda-wang
+
+1)Download psycopg2
+2) Copy to project directory
+# copy psycopg2 to your project root directory?
+# git clone https://github.com/alexcasalboni/awslambda-psycopg2.git
+# cp -r awslambda-psycopg/psycopg2 ??<my_project_root>/
+3)create the deployment package
+
+---
+>>sudo su
+>>yum install python-psycopg2
+yum install python-psycopg2
+----------------------------------------
+***First step: Install psycopg2 on AWS EC2
+sudo yum install gcc python-setuptools python-devel postgresql-devel
+sudo easy_install psycopg2
+
+--------------------------------------------
+import boto3
+import boto.s3.connection
+import psycopg2
+from botocore.awsrequest import prepare_request_dict
+rds = boto3.client('rds')
+s3 = boto3.client('s3')
+
+#dbconn = (psql host=postgres1.cgarumphdeds.ap-south-1.rds.amazonaws.com port=5432 username=tmcs_user1  password=tmcs0987 dbname=postgres)
+
+dbconn = psycopg2.connec("dbname='postgres' user='tmcs_user1' host='postgres1.cgarumphdeds.ap-south-1.rds.amazonaws.com' password='tmcs0987'")
+
+---------------------
+
+print dbconn
+
+
+--------------
+
+	
